@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Fetch Astrologically Intelligent backend
-        run: git clone --depth 1 --branch api/panmedia-agent-control https://github.com/JAPStudios/Astrologically-Intelligent.git "$RUNNER_TEMP/Astrologically-Intelligent"
+        run: git clone --depth 1 --branch main https://github.com/JAPStudios/Astrologically-Intelligent.git "$RUNNER_TEMP/Astrologically-Intelligent"
       - name: Compile Python
         run: python -m py_compile panmedia_server.py tests/test_panmedia_server.py tests/test_live_backend_integration.py
       - name: Run proxy and live-backend integration tests
