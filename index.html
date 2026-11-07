@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>PanMedia — Agent Management</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">JAPStudios public service</p>
+      <h1>PanMedia</h1>
+      <p class="subtitle">Agent management for Astrologically Intelligent</p>
+    </div>
+    <div id="connection" class="connection" role="status">Checking connection…</div>
+  </header>
+  <main>
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">Control plane</p><h2>Agents</h2></div><button id="refresh-agents" class="secondary" type="button">Refresh</button></div>
+      <div id="agents" class="agent-list" aria-live="polite"><p class="muted">Loading agents…</p></div>
+    </section>
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">Registration</p><h2>Register an agent</h2></div></div>
+      <form id="agent-form" class="form-grid">
+        <label>Agent name<input name="name" maxlength="120" required placeholder="Research assistant"></label>
+        <label>Adapter<select name="adapter"><option value="llm">Model-backed</option><option value="model">Model</option><option value="provider">Provider</option></select></label>
+        <label>Role<input name="role" maxlength="80" value="agent"></label>
+        <label>Model override<input name="model" maxlength="200" placeholder="Use the configured default"></label>
+        <label>Heartbeat interval (seconds)<input name="heartbeat_seconds" type="number" min="0" max="86400" value="0"></label>
+        <label class="wide">Allowed tools, one exact registered name per line<textarea name="allowed_tools" rows="4" placeholder="browsing.search&#10;memory.recall"></textarea></label>
+        <label class="wide">System instructions<textarea name="system_prompt" rows="4" placeholder="Optional instructions for this agent"></textarea></label>
+        <div class="wide form-actions"><button type="submit">Register agent</button><p id="agent-form-status" class="muted" role="status"></p></div>
+      </form>
+    </section>
+    <section class="grid-two">
+      <section class="panel">
+        <div class="section-heading"><div><p class="eyebrow">Objectives</p><h2>Goals</h2></div><button id="refresh-goals" class="secondary" type="button">Refresh</button></div>
+        <form id="goal-form" class="stack">
+          <label>Goal title<input name="title" maxlength="200" required placeholder="Complete source review"></label>
+          <label>Description<textarea name="description" rows="3" maxlength="2000"></textarea></label>
+          <label>Owner agent<select name="owner_agent_id" id="goal-owner"><option value="">Organization-wide</option></select></label>
+          <button type="submit">Create goal</button>
+        </form>
+        <div id="goals" class="compact-list" aria-live="polite"></div>
+      </section>
+      <section class="panel">
+        <div class="section-heading"><div><p class="eyebrow">Human oversight</p><h2>Approvals</h2></div><button id="refresh-approvals" class="secondary" type="button">Refresh</button></div>
+        <form id="approval-form" class="stack">
+          <label>Action<input name="action" maxlength="120" required placeholder="Publish report"></label>
+          <label>Details (JSON)<textarea name="details" rows="3" required>{"reason":"Review required"}</textarea></label>
+          <label>Agent<select name="agent_id" id="approval-agent"><option value="">Organization-wide</option></select></label>
+          <button type="submit">Request approval</button>
+        </form>
+        <div id="approvals" class="compact-list" aria-live="polite"></div>
+      </section>
+    </section>
+    <section class="panel">
+      <div class="section-heading"><div><p class="eyebrow">Spend controls</p><h2>Budgets</h2></div><button id="refresh-budgets" class="secondary" type="button">Refresh</button></div>
+      <form id="budget-form" class="form-grid">
+        <label>Limit<input name="limit_amount" type="number" min="0" step="0.01" required></label>
+        <label>Period<input name="period" maxlength="40" required placeholder="2026-11"></label>
+        <label>Currency<input name="currency" maxlength="3" value="USD"></label>
+        <label>Agent<select name="agent_id" id="budget-agent"><option value="">Organization-wide</option></select></label>
+        <div class="wide form-actions"><button type="submit">Set budget</button><p id="budget-form-status" class="muted" role="status"></p></div>
+      </form>
+      <div id="budgets" class="compact-list" aria-live="polite"></div>
+    </section>
+    <p id="global-status" class="global-status" role="status" aria-live="polite"></p>
+  </main>
+  <footer>PanMedia uses the authenticated Astrologically Intelligent control plane. API credentials remain on the server.</footer>
+</body>
+</html>
