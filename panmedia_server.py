@@ -21,6 +21,7 @@ RESOURCE = r"[A-Za-z0-9_-]{1,128}"
 ROUTES = (
     ("GET", re.compile(r"/api/agents"), "/v1/agents"),
     ("GET", re.compile(r"/api/agents/due"), "/v1/agents/due"),
+    ("GET", re.compile(rf"/api/agents/({RESOURCE})"), None),
     ("POST", re.compile(r"/api/agents"), "/v1/agents"),
     ("PATCH", re.compile(rf"/api/agents/({RESOURCE})"), None),
     ("POST", re.compile(rf"/api/agents/({RESOURCE})/execute"), None),

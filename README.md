@@ -19,7 +19,7 @@ Optional listener settings: PANMEDIA_HOST (loopback only) and PANMEDIA_PORT (def
 ## Features
 
 - Register model-backed agents with explicit tool allowlists.
-- List agents, pause or activate them, record heartbeats.
+- List agents, retrieve individual agent records, pause or activate them, record heartbeats.
 - Execute prompts through the existing agent runtime.
 - Create goals, request human approvals, approve or reject pending actions.
 - Set organization or per-agent budgets; view recorded spend.

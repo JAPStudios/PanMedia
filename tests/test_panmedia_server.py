@@ -27,6 +27,8 @@ class FakeUpstream(BaseHTTPRequestHandler):
             return self._send(200, {"agents": [{"id": "agent-1", "name": "Research"}]})
         if self.path == "/v1/agents":
             return self._send(200, {"agents": []})
+        if self.path == "/v1/agents/agent-1":
+            return self._send(200, {"agent": {"id": "agent-1", "name": "Research"}})
         return self._send(404, {"error": "not_found"})
 
     def do_POST(self):
@@ -82,6 +84,11 @@ class PanMediaProxyTests(unittest.TestCase):
             ("GET", "/v1/agents?state=active", "Bearer " + "x" * 32, None),
         )
 
+    def test_individual_agent_lookup_uses_fixed_upstream_route(self):
+        with self.request("/api/agents/agent-1") as response:
+            payload = json.loads(response.read())
+        self.assertEqual(payload["agent"]["name"], "Research")
+        self.assertEqual(UpstreamState.requests[-1][1], "/v1/agents/agent-1")
     def test_agent_registration_forwards_json_body(self):
         body = {"name": "Writer", "adapter": "llm", "config": {"allowed_tools": []}}
         with self.request("/api/agents", "POST", body) as response:
