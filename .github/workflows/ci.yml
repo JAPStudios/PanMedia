@@ -18,9 +18,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Fetch Astrologically Intelligent backend
+        run: git clone --depth 1 --branch main https://github.com/JAPStudios/Astrologically-Intelligent.git "$RUNNER_TEMP/Astrologically-Intelligent"
       - name: Compile Python
-        run: python -m py_compile panmedia_server.py tests/test_panmedia_server.py
-      - name: Run proxy integration tests
+        run: python -m py_compile panmedia_server.py tests/test_panmedia_server.py tests/test_live_backend_integration.py
+      - name: Run proxy and live-backend integration tests
+        env:
+          ASTRO_AI_REPO_PATH: ${{ runner.temp }}/Astrologically-Intelligent
         run: python -m unittest discover -s tests -v
       - name: Check browser JavaScript syntax
         run: node --check script.js
